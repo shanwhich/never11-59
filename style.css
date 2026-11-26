@@ -1,0 +1,83 @@
+/* Warm, colorful cozy academic background and animations */
+body {
+font-family: 'Plus Jakarta Sans', sans-serif;
+background-color: #ECDDC6;
+background-image:
+radial-gradient(circle at 12% 14%, rgba(109, 155, 118, 0.36) 0%, transparent 44%),
+radial-gradient(circle at 88% 16%, rgba(217, 123, 89, 0.32) 0%, transparent 45%),
+radial-gradient(circle at 76% 85%, rgba(217, 155, 56, 0.34) 0%, transparent 48%),
+radial-gradient(circle at 20% 82%, rgba(123, 143, 217, 0.30) 0%, transparent 44%),
+linear-gradient(155deg, #F5E8D6 0%, #E8D5BC 50%, #DAC3A6 100%);
+background-attachment: fixed;
+color: #2F2A26;
+min-height: 100vh;
+}
+
+.bg-cozy-dots {
+background-image:
+radial-gradient(circle at 12% 14%, rgba(109, 155, 118, 0.34) 0%, transparent 44%),
+radial-gradient(circle at 88% 16%, rgba(217, 123, 89, 0.30) 0%, transparent 45%),
+radial-gradient(circle at 76% 85%, rgba(217, 155, 56, 0.32) 0%, transparent 48%),
+radial-gradient(circle at 20% 82%, rgba(123, 143, 217, 0.28) 0%, transparent 44%),
+radial-gradient(rgba(118, 107, 97, 0.18) 1px, transparent 1px);
+background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 22px 22px;
+}
+
+.receipt-divider {
+border-top: 2px dashed #DFD2C2;
+}
+
+.kanban-col.drag-over {
+outline: 2.5px dashed #6D9B76;
+outline-offset: -3px;
+background-color: rgba(226, 239, 228, 0.55);
+}
+
+.task-card.dragging {
+opacity: 0.55;
+transform: rotate(2deg) scale(1.02);
+}
+
+@keyframes stampPop {
+0% { transform: scale(0.85) rotate(-3deg); opacity: 0; }
+70% { transform: scale(1.03) rotate(0.5deg); opacity: 1; }
+100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.stamp-animate {
+animation: stampPop 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes dinoFloat {
+0%, 100% { transform: translateY(0px) rotate(-1.5deg); }
+50% { transform: translateY(-6px) rotate(1.5deg); }
+}
+
+.animate-dino {
+animation: dinoFloat 3.4s ease-in-out infinite;
+}
+
+button,
+label[for],
+[role="button"] {
+cursor: pointer;
+}
+
+::-webkit-scrollbar {
+width: 7px;
+height: 7px;
+}
+
+::-webkit-scrollbar-track {
+background: #F4EDE3;
+border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb {
+background: #D6C5B0;
+border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: #B9A48B;
+}

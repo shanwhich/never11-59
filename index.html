@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Never1159 — Your cure for the 11:58 panic.</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Fredoka"', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif']
+          },
+          colors: {
+            cream: '#FAF6F0',
+            ivory: '#F5ECE0',
+            sand: '#E5D6C3',
+            sandLight: '#EFE3D3',
+            espresso: '#2F2A26',
+            mocha: '#766B61',
+            sage: '#6D9B76',
+            sageSoft: '#E2EFE4',
+            terracotta: '#D97B59',
+            terracottaSoft: '#F9E4DC',
+            honey: '#D99B38',
+            honeySoft: '#F9EBD2',
+            lavender: '#7B8FD9',
+            lavenderSoft: '#E5E9FA'
+          },
+          boxShadow: {
+            cozy: '0 10px 28px -6px rgba(68, 52, 38, 0.09), 0 4px 12px -4px rgba(217, 123, 89, 0.08)'
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-cozy-dots text-espresso antialiased selection:bg-sageSoft selection:text-espresso">
+  <!-- Toast Container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+  <!-- =====================================================================
+       PUBLIC LANDING VIEW (60% Short Description + Cute Dino | 40% Auth)
+       ===================================================================== -->
+  <main id="landing-view" class="min-h-screen flex items-center justify-center p-4 sm:p-8">
+    <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-7 items-center">
+
+      <!-- LEFT 60% (7 of 12 cols): Short App Description + Cute Dino Mascot -->
+      <section class="lg:col-span-7 bg-gradient-to-br from-ivory via-cream to-sageSoft/70 border-2 border-sand rounded-[28px] p-6 sm:p-10 shadow-cozy space-y-6">
+        <div class="flex items-start justify-between gap-4">
+          <div class="space-y-2">
+            <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold tracking-wide uppercase bg-sageSoft text-sage border border-sage/25">
+              <span class="w-2 h-2 rounded-full bg-sage"></span>
+              Student Group Receipt
+            </span>
+
+            <h1 class="font-display text-4xl sm:text-5xl font-bold tracking-tight text-espresso">
+              Never<span class="text-terracotta">1159</span>
+            </h1>
+
+            <p class="font-display text-lg sm:text-xl font-semibold text-mocha">
+              Your cure for the 11:58 panic.
+            </p>
+          </div>
+
+          <!-- Cute Little Dinosaur Mascot SVG (Interactive Study Buddy) -->
+          <button type="button" onclick="dinoHelpfulTip()" class="animate-dino shrink-0 bg-gradient-to-br from-honeySoft via-ivory to-terracottaSoft/60 border-2 border-honey/45 rounded-3xl p-2.5 shadow-cozy cursor-pointer transition text-left group" title="Click Dino for a live task & deadline check!">
+            <svg class="w-20 h-20 sm:w-24 sm:h-24" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="60" cy="108" rx="34" ry="6" fill="#6D9B76" fill-opacity="0.22" />
+              <path d="M24 78C14 76 10 66 15 59C19 54 27 60 33 66" fill="#7FA883" stroke="#2F2A26" stroke-width="3" stroke-linecap="round" />
+              <path d="M44 34L39 25L50 31Z" fill="#D97B59" />
+              <path d="M36 48L26 43L35 55Z" fill="#D97B59" />
+              <path d="M33 64L23 63L33 71Z" fill="#D97B59" />
+              <rect x="34" y="30" width="50" height="68" rx="25" fill="#8FB996" stroke="#2F2A26" stroke-width="3" />
+              <ellipse cx="64" cy="73" rx="16" ry="20" fill="#F9EBD9" fill-opacity="0.92" />
+              <rect x="40" y="92" width="14" height="13" rx="6.5" fill="#7FA883" stroke="#2F2A26" stroke-width="3" />
+              <rect x="64" y="92" width="14" height="13" rx="6.5" fill="#7FA883" stroke="#2F2A26" stroke-width="3" />
+              <circle cx="56" cy="46" r="13" fill="#8FB996" stroke="#2F2A26" stroke-width="3" />
+              <circle cx="53" cy="44" r="2.8" fill="#2F2A26" />
+              <circle cx="65" cy="44" r="2.8" fill="#2F2A26" />
+              <circle cx="54" cy="43" r="1" fill="#FAF6F0" />
+              <circle cx="66" cy="43" r="1" fill="#FAF6F0" />
+              <ellipse cx="49" cy="50" rx="3.5" ry="2" fill="#E89A7E" fill-opacity="0.85" />
+              <ellipse cx="69" cy="50" rx="3.5" ry="2" fill="#E89A7E" fill-opacity="0.85" />
+              <path d="M55 51C57 54 61 54 63 51" stroke="#2F2A26" stroke-width="2.5" stroke-linecap="round" />
+              <path d="M78 66C87 66 91 61 87 56" stroke="#7FA883" stroke-width="7" stroke-linecap="round" />
+              <path d="M78 66C87 66 91 61 87 56" stroke="#2F2A26" stroke-width="3" stroke-linecap="round" />
+            </svg>
+            <span class="block text-center text-[10px] font-extrabold text-terracotta group-hover:text-espresso transition mt-0.5">Tap Dino Tip</span>
+          </button>
+        </div>
+
+        <p class="text-sm sm:text-base text-mocha leading-relaxed max-w-xl">
+          Never1159 turns stressful university group work into a calm, transparent receipt. Split deliverables fairly, set automatic backward checkpoints before crunch time, and celebrate when everyone finishes their share.
+        </p>
+
+        <!-- Compact Signature Feature Pills -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+          <div class="bg-gradient-to-br from-lavenderSoft via-ivory to-cream border border-lavender/35 rounded-2xl p-3.5 shadow-sm flex items-start gap-3">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-lavender to-lavender/80 text-white flex items-center justify-center shrink-0 font-bold text-sm shadow-sm">01</div>
+            <div>
+              <p class="font-bold text-sm text-espresso">Itemized Tasks</p>
+              <p class="text-xs text-mocha mt-0.5">Clear deliverables per member.</p>
+            </div>
+          </div>
+          <div class="bg-gradient-to-br from-honeySoft via-ivory to-cream border border-honey/40 rounded-2xl p-3.5 shadow-sm flex items-start gap-3">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-honey to-terracotta text-white flex items-center justify-center shrink-0 font-bold text-sm shadow-sm">02</div>
+            <div>
+              <p class="font-bold text-sm text-espresso">Total Due: Friday</p>
+              <p class="text-xs text-mocha mt-0.5">Auto-staggered backward dates.</p>
+            </div>
+          </div>
+          <div class="bg-gradient-to-br from-sageSoft via-ivory to-cream border border-sage/40 rounded-2xl p-3.5 shadow-sm flex items-start gap-3">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-sage to-sage/80 text-white flex items-center justify-center shrink-0 font-bold text-sm shadow-sm">03</div>
+            <div>
+              <p class="font-bold text-sm text-espresso">Paid In Full</p>
+              <p class="text-xs text-mocha mt-0.5">Everyone did their share.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT 40% (5 of 12 cols): Cozy Log In & Sign Up Card -->
+      <section class="lg:col-span-5">
+        <div class="bg-gradient-to-b from-honeySoft/70 via-ivory to-terracottaSoft/60 border-2 border-sand rounded-[24px] p-6 sm:p-8 shadow-cozy">
+          <div class="grid grid-cols-2 gap-1.5 p-1.5 rounded-2xl bg-gradient-to-r from-sandLight via-cream to-honeySoft/70 border border-sand mb-6">
+            <button type="button" id="tab-login-btn" onclick="switchAuthTab('login')" class="py-2.5 text-sm font-bold rounded-xl bg-gradient-to-r from-sageSoft to-ivory text-espresso shadow-sm transition">
+              Log In
+            </button>
+            <button type="button" id="tab-signup-btn" onclick="switchAuthTab('signup')" class="py-2.5 text-sm font-bold rounded-xl text-mocha hover:text-espresso transition">
+              Sign Up
+            </button>
+          </div>
+
+          <!-- Log In Form -->
+          <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1.5">Email or Invite Code</label>
+              <input type="text" id="login-identifier" required placeholder="maya@uni.edu or N1159-MAYA" class="w-full px-4 py-2.5 rounded-xl bg-ivory border border-sand text-sm text-espresso focus:outline-none focus:border-sage" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1.5">Password</label>
+              <input type="password" id="login-password" required placeholder="••••••••" class="w-full px-4 py-2.5 rounded-xl bg-ivory border border-sand text-sm text-espresso focus:outline-none focus:border-sage" />
+            </div>
+            <button type="submit" class="w-full py-3 rounded-xl bg-sage hover:bg-sage/90 text-white font-bold text-sm shadow-sm transition">
+              Log In to Never1159
+            </button>
+            <div class="pt-2 border-t border-sand/80 flex items-center justify-between text-xs text-mocha">
+              <span>Want a quick tour?</span>
+              <button type="button" onclick="loginWithDemoAccount()" class="font-bold text-terracotta hover:underline">
+                Try Demo Student
+              </button>
+            </div>
+          </form>
+
+          <!-- Sign Up Form -->
+          <form id="signup-form" onsubmit="handleSignup(event)" class="space-y-3.5 hidden">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1">Full Name</label>
+              <input type="text" id="signup-name" required placeholder="Alex Rivera" class="w-full px-3.5 py-2 rounded-xl bg-ivory border border-sand text-sm text-espresso focus:outline-none focus:border-sage" />
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1">Year Level</label>
+                <select id="signup-year" class="w-full px-3 py-2 rounded-xl bg-ivory border border-sand text-sm text-espresso focus:outline-none focus:border-sage">
+                  <option value="1st Year">1st Year</option>
+                  <option value="2nd Year">2nd Year</option>
+                  <option value="3rd Year" selected>3rd Year</option>
+                  <option value="4th Year">4th Year</option>
+                  <option value="Grad Student">Grad Student</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1">Student ID Number</label>
+                <input type="text" id="signup-student-id" required placeholder="e.g., 2026-11590" class="w-full px-3.5 py-2 rounded-xl bg-ivory border border-sand text-sm text-espresso focus:outline-none focus:border-sage" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1">Course</label>
+              <input type="text" id="signup-course" required placeholder="BS CS" class="w-full px-3.5 py-2 rounded-xl bg-ivory border border-sand text-sm text-espresso focus:outline-none focus:border-sage" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1">University Email</label>
+              <input type="email" id="signup-email" required placeholder="alex@uni.edu" class="w-full px-3.5 py-2 rounded-xl bg-ivory border border-sand text-sm text-espresso focus:outline-none focus:border-sage" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1">Password</label>
+              <input type="password" id="signup-password" required minlength="4" placeholder="Create a password" class="w-full px-3.5 py-2 rounded-xl bg-ivory border border-sand text-sm text-espresso focus:outline-none focus:border-sage" />
+            </div>
+            <button type="submit" class="w-full py-3 rounded-xl bg-sage hover:bg-sage/90 text-white font-bold text-sm shadow-sm transition">
+              Create Student Account
+            </button>
+          </form>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- =====================================================================
+       LOGGED-IN WORKSPACE (3-Section Navigation: Home | Squad Rooms | Profile)
+       ===================================================================== -->
+  <div id="workspace-view" class="hidden min-h-screen flex flex-col">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-30 bg-gradient-to-r from-ivory via-honeySoft/50 to-sageSoft/65 backdrop-blur border-b-2 border-sand">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+        <!-- Brand with Cute Dino Logo -->
+        <button type="button" onclick="navigateTo('home')" class="flex items-center gap-2.5 text-left shrink-0">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-sageSoft via-ivory to-honeySoft border border-sage/30 flex items-center justify-center shadow-sm">
+            <svg class="w-7 h-7" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M24 78C14 76 10 66 15 59C19 54 27 60 33 66" fill="#7FA883" stroke="#2F2A26" stroke-width="3.5" stroke-linecap="round" />
+              <path d="M44 34L39 25L50 31Z" fill="#D97B59" />
+              <path d="M36 48L26 43L35 55Z" fill="#D97B59" />
+              <rect x="34" y="30" width="50" height="68" rx="25" fill="#8FB996" stroke="#2F2A26" stroke-width="3.5" />
+              <ellipse cx="64" cy="73" rx="16" ry="20" fill="#F9EBD9" />
+              <circle cx="56" cy="46" r="13" fill="#8FB996" stroke="#2F2A26" stroke-width="3.5" />
+              <circle cx="53" cy="44" r="3" fill="#2F2A26" />
+              <circle cx="65" cy="44" r="3" fill="#2F2A26" />
+              <ellipse cx="49" cy="50" rx="3.5" ry="2" fill="#E89A7E" />
+              <ellipse cx="69" cy="50" rx="3.5" ry="2" fill="#E89A7E" />
+              <path d="M55 51C57 54 61 54 63 51" stroke="#2F2A26" stroke-width="2.8" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="leading-tight">
+            <span class="font-display font-bold text-lg text-espresso block">Never<span class="text-terracotta">1159</span></span>
+            <span class="hidden sm:block text-[10px] font-semibold text-mocha">Your cure for the 11:58 panic.</span>
+          </div>
+        </button>
+
+        <!-- 3 Primary Navigation Tabs -->
+        <nav aria-label="Main Navigation" class="flex items-center gap-1 sm:gap-2 bg-gradient-to-r from-sandLight via-honeySoft/60 to-sageSoft/60 p-1 rounded-2xl border border-sand">
+          <button type="button" id="nav-btn-home" onclick="navigateTo('home')" class="nav-tab px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition">
+            <span>Home</span>
+          </button>
+          <button type="button" id="nav-btn-rooms" onclick="navigateTo('rooms')" class="nav-tab px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition">
+            <span>Squad Rooms</span>
+          </button>
+          <button type="button" id="nav-btn-profile" onclick="navigateTo('profile')" class="nav-tab px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition">
+            <span>Profile</span>
+          </button>
+        </nav>
+
+        <!-- Instagram-Style Messages Button, User Pill & Logout -->
+        <div class="flex items-center gap-2 shrink-0">
+          <button type="button" onclick="openMessagesDrawer()" title="Project Direct Messages" class="relative p-2 rounded-2xl bg-gradient-to-r from-lavenderSoft via-ivory to-sageSoft/70 hover:opacity-95 border border-sand text-espresso transition flex items-center justify-center">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+            </svg>
+            <span id="header-unread-badge" class="hidden absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-terracotta text-white text-[10px] font-extrabold flex items-center justify-center shadow-xs">0</span>
+          </button>
+
+          <button type="button" onclick="navigateTo('profile')" class="flex items-center gap-2 px-2.5 py-1 rounded-2xl bg-gradient-to-r from-sageSoft/80 to-ivory hover:opacity-95 border border-sand transition">
+            <img id="header-user-avatar" src="" alt="Avatar" class="w-7 h-7 rounded-xl object-cover bg-sageSoft" />
+            <span id="header-user-name" class="hidden md:inline text-xs font-bold text-espresso max-w-[120px] truncate">Student</span>
+          </button>
+          <button type="button" onclick="handleLogout()" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-terracottaSoft to-ivory hover:bg-terracotta text-terracotta hover:text-white text-xs font-bold border border-terracotta/25 transition">
+            Log Out
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <div class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+
+      <!-- =================================================================
+           NAVIGATION 1: HOME (DASHBOARD)
+           ================================================================= -->
+      <section id="section-home" class="space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-wider text-mocha" id="home-today-date">Thursday, Nov 26, 2026</p>
+            <h2 class="font-display text-2xl sm:text-3xl font-bold text-espresso mt-0.5">
+              Welcome back, <span id="home-welcome-name" class="text-sage">Student</span>
+            </h2>
+          </div>
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-gradient-to-r from-ivory to-lavenderSoft/60 border border-sand shadow-sm text-xs font-semibold text-mocha">
+            <span class="w-2 h-2 rounded-full bg-sage"></span>
+            <span id="home-user-course">BS Computer Science • 3rd Year</span>
+          </div>
+        </div>
+
+        <!-- Top Grid: Completion Progress + Pending Activities -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+          <!-- Completion Percentage Card -->
+          <div class="lg:col-span-5 bg-gradient-to-br from-sageSoft/75 via-ivory to-honeySoft/55 border-2 border-sand rounded-[24px] p-6 shadow-cozy flex flex-col justify-between gap-5">
+            <div class="flex items-center justify-between">
+              <h3 class="font-display text-lg font-bold text-espresso">Current Works Completion</h3>
+              <span id="home-completion-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-sageSoft text-sage">On Track</span>
+            </div>
+
+            <div class="flex items-center gap-6">
+              <div class="relative w-28 h-28 shrink-0 flex items-center justify-center">
+                <svg class="w-28 h-28 -rotate-90" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="40" stroke="#E8DEC8" stroke-width="10" fill="none" />
+                  <circle id="home-progress-ring" cx="50" cy="50" r="40" stroke="#6D9B76" stroke-width="10" stroke-linecap="round" fill="none" stroke-dasharray="251.2" stroke-dashoffset="251.2" class="transition-all duration-500" />
+                </svg>
+                <span id="home-completion-percent" class="absolute font-display text-2xl font-bold text-espresso">0%</span>
+              </div>
+
+              <div class="space-y-2 flex-1">
+                <div class="flex justify-between text-xs">
+                  <span class="text-mocha font-medium">Approved Deliverables</span>
+                  <span id="home-stat-done" class="font-bold text-sage">0</span>
+                </div>
+                <div class="flex justify-between text-xs">
+                  <span class="text-mocha font-medium">In Progress / Submitted</span>
+                  <span id="home-stat-progress" class="font-bold text-honey">0</span>
+                </div>
+                <div class="flex justify-between text-xs">
+                  <span class="text-mocha font-medium">Not Starting Yet</span>
+                  <span id="home-stat-todo" class="font-bold text-mocha">0</span>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" onclick="navigateTo('rooms')" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-sandLight via-cream to-sageSoft/70 hover:bg-sand text-espresso font-bold text-xs border border-sand transition">
+              Open Squad Rooms Board →
+            </button>
+          </div>
+
+          <!-- Pending Activities & Deadlines -->
+          <div class="lg:col-span-7 bg-gradient-to-br from-honeySoft/65 via-ivory to-terracottaSoft/45 border-2 border-sand rounded-[24px] p-6 shadow-cozy flex flex-col">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="font-display text-lg font-bold text-espresso">Pending Activities & Checkpoints</h3>
+                <p class="text-xs text-mocha">Sorted by nearest internal checkpoint deadline</p>
+              </div>
+              <span id="home-pending-count" class="px-3 py-1 rounded-full text-xs font-bold bg-terracottaSoft text-terracotta">0 Pending</span>
+            </div>
+
+            <div id="home-pending-list" class="space-y-2.5 max-h-64 overflow-y-auto pr-1 flex-1">
+              <!-- Populated via JS -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Bottom Grid: Interactive Calendar + Async Meeting & Focus Timer -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+          <!-- Interactive Calendar View -->
+          <div class="lg:col-span-7 bg-gradient-to-br from-lavenderSoft/60 via-ivory to-sageSoft/55 border-2 border-sand rounded-[24px] p-6 shadow-cozy space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="font-display text-lg font-bold text-espresso">Interactive Deadline Calendar</h3>
+                <p class="text-xs text-mocha">Click any date to inspect checkpoints & due dates</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="changeCalendarMonth(-1)" class="w-8 h-8 rounded-xl bg-cream hover:bg-sandLight border border-sand font-bold text-espresso flex items-center justify-center transition">‹</button>
+                <span id="calendar-month-label" class="font-display font-bold text-sm text-espresso min-w-[125px] text-center">November 2026</span>
+                <button type="button" onclick="changeCalendarMonth(1)" class="w-8 h-8 rounded-xl bg-cream hover:bg-sandLight border border-sand font-bold text-espresso flex items-center justify-center transition">›</button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-7 gap-1.5 text-center text-[11px] font-bold text-mocha uppercase">
+              <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+            </div>
+
+            <div id="calendar-grid" class="grid grid-cols-7 gap-1.5">
+              <!-- Calendar days rendered by JS -->
+            </div>
+
+            <div id="calendar-selected-details" class="p-3.5 rounded-2xl bg-gradient-to-r from-cream via-ivory to-sageSoft/40 border border-sand text-xs">
+              <p class="font-bold text-espresso mb-1" id="selected-date-title">Select a date</p>
+              <div id="selected-date-items" class="space-y-1 text-mocha">No checkpoints on this date.</div>
+            </div>
+          </div>
+
+          <!-- Asynchronous Meeting Slot + Working Focus Timer -->
+          <div class="lg:col-span-5 bg-gradient-to-b from-terracottaSoft/60 via-ivory to-honeySoft/60 border-2 border-sand rounded-[24px] p-6 shadow-cozy space-y-6">
+            <!-- Working Focus Timer -->
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <h3 class="font-display text-lg font-bold text-espresso">Calm Focus Timer</h3>
+                <select id="timer-preset-select" onchange="setTimerDuration(this.value)" class="px-2.5 py-1 rounded-xl bg-cream border border-sand text-xs font-bold text-espresso focus:outline-none">
+                  <option value="25">25m Pomodoro</option>
+                  <option value="45">45m Deep Work</option>
+                  <option value="15">15m Sprint</option>
+                  <option value="5">5m Break</option>
+                </select>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-gradient-to-br from-sageSoft/70 via-cream to-honeySoft/55 border border-sand text-center space-y-3">
+                <div id="focus-timer-display" class="font-display text-4xl sm:text-5xl font-bold tracking-wider text-espresso">25:00</div>
+                <p id="focus-timer-status" class="text-xs font-semibold text-mocha">Ready for a distraction-free block</p>
+                <div class="flex items-center justify-center gap-2">
+                  <button type="button" onclick="startFocusTimer()" class="px-4 py-2 rounded-xl bg-sage hover:bg-sage/90 text-white text-xs font-bold shadow-sm transition">
+                    Start
+                  </button>
+                  <button type="button" onclick="pauseFocusTimer()" class="px-4 py-2 rounded-xl bg-honey hover:bg-honey/90 text-white text-xs font-bold shadow-sm transition">
+                    Pause
+                  </button>
+                  <button type="button" onclick="resetFocusTimer()" class="px-4 py-2 rounded-xl bg-ivory hover:bg-sandLight text-espresso text-xs font-bold border border-sand transition">
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Asynchronous Meeting / Check-In Slot -->
+            <div class="pt-4 border-t border-sand space-y-3">
+              <div>
+                <h4 class="font-display text-base font-bold text-espresso">Async Check-In Slot</h4>
+                <p class="text-xs text-mocha">Set a shared async window so teammates post updates without live call stress.</p>
+              </div>
+
+              <form onsubmit="saveAsyncMeeting(event)" class="space-y-2.5">
+                <div class="grid grid-cols-2 gap-2.5">
+                  <input type="date" id="async-date" required class="px-3 py-2 rounded-xl bg-cream border border-sand text-xs text-espresso focus:outline-none focus:border-sage" />
+                  <input type="time" id="async-time" required class="px-3 py-2 rounded-xl bg-cream border border-sand text-xs text-espresso focus:outline-none focus:border-sage" />
+                </div>
+                <input type="text" id="async-note" required placeholder="Async focus note (e.g., Drop draft links by 8 PM)" class="w-full px-3 py-2 rounded-xl bg-cream border border-sand text-xs text-espresso focus:outline-none focus:border-sage" />
+                <button type="submit" class="w-full py-2 rounded-xl bg-terracotta hover:bg-terracotta/90 text-white text-xs font-bold shadow-sm transition">
+                  Save Async Check-In
+                </button>
+              </form>
+
+              <div id="async-saved-banner" class="p-3 rounded-xl bg-gradient-to-r from-lavenderSoft/75 via-ivory to-sageSoft/50 border border-lavender/25 text-xs text-espresso">
+                <p id="async-saved-text" class="font-semibold text-mocha">No async check-in scheduled yet.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =================================================================
+           NAVIGATION 2: SQUAD ROOMS (ROLE LOCKED ON ROOM CREATION)
+           ================================================================= -->
+      <section id="section-rooms" class="hidden space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2.5">
+              <h2 class="font-display text-2xl sm:text-3xl font-bold text-espresso">Squad Rooms</h2>
+              <span id="rooms-count-pill" class="px-3 py-0.5 rounded-full text-xs font-bold bg-sageSoft text-sage">0 Rooms</span>
+            </div>
+            <p class="text-xs sm:text-sm text-mocha mt-0.5">
+              Split group deliverables backward from your deadline. Roles are locked once created.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button type="button" onclick="openQrScannerModal('add_friend')" class="px-4 py-2.5 rounded-2xl bg-ivory hover:bg-sandLight border border-sand text-xs font-bold text-espresso shadow-2xs transition">
+              📷 Scan QR Invite
+            </button>
+            <button type="button" onclick="openCreateRoomModal()" class="px-4 py-2.5 rounded-2xl bg-sage hover:bg-sage/90 text-white text-xs sm:text-sm font-bold shadow-sm transition">
+              + Create Squad Room
+            </button>
+          </div>
+        </div>
+
+        <!-- Room Selector Grouped by Status -->
+        <div id="room-selector-tabs" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Populated via JS -->
+        </div>
+
+        <!-- Active Squad Room Workspace -->
+        <div id="active-room-container" class="space-y-6">
+          <!-- Populated via JS -->
+        </div>
+      </section>
+
+      <!-- =================================================================
+           NAVIGATION 3: PROFILE, FRIENDS DIRECTORY & PERSONAL QR PASS
+           ================================================================= -->
+      <section id="section-profile" class="hidden space-y-6">
+        <div>
+          <h2 class="font-display text-2xl sm:text-3xl font-bold text-espresso">My Student Profile & Squad Directory</h2>
+          <p class="text-xs sm:text-sm text-mocha mt-0.5">Update your live student details, add teammates by search or QR, and share your personal QR pass.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Left 7 Cols: Edit Profile Form -->
+          <div class="lg:col-span-7 bg-gradient-to-br from-ivory via-cream to-sageSoft/55 border-2 border-sand rounded-[26px] p-6 sm:p-7 shadow-cozy space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-4 pb-4 border-b border-sand">
+              <img id="profile-preview-avatar" src="" alt="My Avatar" class="w-20 h-20 rounded-3xl object-cover border-2 border-sand bg-sageSoft shrink-0" />
+              <div class="space-y-2">
+                <p class="text-xs font-bold uppercase tracking-wider text-mocha">Choose Cozy Mascot or Upload Photo</p>
+                <div class="flex flex-wrap items-center gap-2">
+                  <button type="button" onclick="selectPresetAvatar('dino')" class="px-3 py-1.5 rounded-xl bg-sageSoft hover:bg-sage/25 text-xs font-bold text-espresso transition">🦕 Dino</button>
+                  <button type="button" onclick="selectPresetAvatar('bear')" class="px-3 py-1.5 rounded-xl bg-honeySoft hover:bg-honey/25 text-xs font-bold text-espresso transition">🧸 Bear</button>
+                  <button type="button" onclick="selectPresetAvatar('cat')" class="px-3 py-1.5 rounded-xl bg-terracottaSoft hover:bg-terracotta/25 text-xs font-bold text-espresso transition">🐱 Cat</button>
+                  <button type="button" onclick="selectPresetAvatar('bunny')" class="px-3 py-1.5 rounded-xl bg-lavenderSoft hover:bg-lavender/25 text-xs font-bold text-espresso transition">🐰 Bunny</button>
+                  <label class="px-3 py-1.5 rounded-xl bg-cream hover:bg-sandLight border border-sand text-xs font-bold text-espresso cursor-pointer transition">
+                    Upload Photo
+                    <input type="file" accept="image/*" onchange="handleProfilePhotoUpload(event)" class="hidden" />
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <form onsubmit="saveProfileChanges(event)" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1">Full Name</label>
+                  <input type="text" id="prof-name" required class="w-full px-3.5 py-2 rounded-xl bg-cream border border-sand text-sm text-espresso" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1">Student ID Number</label>
+                  <input type="text" id="prof-student-id" required class="w-full px-3.5 py-2 rounded-xl bg-cream border border-sand text-sm text-espresso" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1">Year Level</label>
+                  <select id="prof-year" class="w-full px-3.5 py-2 rounded-xl bg-cream border border-sand text-sm text-espresso">
+                    <option value="1st Year">1st Year</option>
+                    <option value="2nd Year">2nd Year</option>
+                    <option value="3rd Year">3rd Year</option>
+                    <option value="4th Year">4th Year</option>
+                    <option value="Grad Student">Grad Student</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1">Course / Program</label>
+                  <input type="text" id="prof-course" required class="w-full px-3.5 py-2 rounded-xl bg-cream border border-sand text-sm text-espresso" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1">Preferred Async Hours</label>
+                  <input type="text" id="prof-async-hours" placeholder="e.g., 7:00 PM – 10:00 PM" class="w-full px-3.5 py-2 rounded-xl bg-cream border border-sand text-sm text-espresso" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1">Default Focus Block</label>
+                  <select id="prof-focus-default" class="w-full px-3.5 py-2 rounded-xl bg-cream border border-sand text-sm text-espresso">
+                    <option value="25">25 Minutes (Pomodoro)</option>
+                    <option value="45">45 Minutes (Deep Work)</option>
+                    <option value="15">15 Minutes (Sprint)</option>
+                  </select>
+                </div>
+              </div>
+
+              <label class="flex items-center gap-2.5 text-xs font-semibold text-espresso cursor-pointer">
+                <input type="checkbox" id="prof-reminders" class="w-4 h-4 rounded accent-sage" />
+                <span>Send cozy checkpoint reminders before internal due dates</span>
+              </label>
+
+              <button type="submit" class="w-full py-3 rounded-xl bg-sage hover:bg-sage/90 text-white font-bold text-sm shadow-sm transition">
+                Save Profile Changes
+              </button>
+            </form>
+          </div>
+
+          <!-- Right 5 Cols: Personal QR Invite Pass -->
+          <div class="lg:col-span-5 bg-gradient-to-br from-lavenderSoft/65 via-ivory to-honeySoft/55 border-2 border-sand rounded-[26px] p-6 sm:p-7 shadow-cozy flex flex-col items-center justify-between text-center space-y-4">
+            <div class="space-y-1">
+              <span class="px-3 py-1 rounded-full text-xs font-bold bg-lavenderSoft text-lavender">Personal Squad QR Pass</span>
+              <h3 class="font-display text-xl font-bold text-espresso pt-1">Instant Teammate Invite</h3>
+              <p class="text-xs text-mocha">Let teammates scan your QR code or enter your Invite ID to add you directly.</p>
+            </div>
+
+            <div class="p-4 rounded-3xl bg-cream border-2 border-sand shadow-inner">
+              <div id="profile-qr-container" class="flex items-center justify-center"></div>
+            </div>
+
+            <div class="w-full space-y-2">
+              <p id="profile-qr-caption" class="text-xs font-semibold text-mocha">Student • ID</p>
+              <div class="flex items-center justify-center gap-2 p-2.5 rounded-2xl bg-cream border border-sand">
+                <span id="profile-invite-id" class="font-mono font-extrabold text-sm text-espresso">N1159-USER</span>
+                <button type="button" onclick="copyPersonalInviteId()" class="px-3 py-1 rounded-xl bg-sageSoft hover:bg-sage text-sage hover:text-white text-xs font-bold transition">
+                  Copy ID
+                </button>
+              </div>
+            </div>
+
+            <button type="button" onclick="downloadProfileQR()" class="w-full py-2.5 rounded-xl bg-lavender hover:bg-lavender/90 text-white text-xs font-bold shadow-sm transition">
+              Download QR Code PNG
+            </button>
+          </div>
+        </div>
+
+        <!-- Squad Directory & Friends Search Section -->
+        <div class="bg-gradient-to-br from-honeySoft/55 via-ivory to-sageSoft/45 border-2 border-sand rounded-[26px] p-6 sm:p-7 shadow-cozy space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="font-display text-xl font-bold text-espresso">Squad Directory & Friends</h3>
+                <span id="friends-count-pill" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-sageSoft text-sage">0 Friends</span>
+              </div>
+              <p class="text-xs text-mocha mt-0.5">Search students by name, Student ID, or Invite Code—or scan their QR pass. Click any profile picture to visit their page!</p>
+            </div>
+            <button type="button" onclick="openQrScannerModal('add_friend')" class="px-4 py-2 rounded-xl bg-espresso text-ivory text-xs font-bold hover:opacity-90 transition shrink-0">
+              📷 Scan Friend QR Code
+            </button>
+          </div>
+
+          <!-- Search Bar -->
+          <div class="relative">
+            <input type="text" id="user-search-input" oninput="handleUserSearchInput(this.value)" placeholder="Search students by name, Student ID (e.g., 2026-10884), or Invite ID (e.g., N1159-LIAM)..."
+              class="w-full px-4 py-3 rounded-2xl bg-cream border border-sand text-sm text-espresso focus:outline-none focus:border-sage" />
+          </div>
+
+          <!-- Live Search Results -->
+          <div id="user-search-results" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+
+          <!-- Added Friends Grid -->
+          <div class="space-y-2.5 pt-2 border-t border-sand">
+            <p class="text-xs font-bold uppercase tracking-wider text-mocha">Added Friends (Click Avatar to Visit Profile)</p>
+            <div id="added-friends-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           NAVIGATION 4: DEDICATED TEAMMATE PROFILE PAGE (SOCIAL MEDIA STYLE)
+           ================================================================= -->
+      <section id="section-teammate-profile" class="hidden space-y-6">
+        <div class="flex items-center justify-between">
+          <button type="button" onclick="navigateBackFromTeammateProfile()" class="px-4 py-2 rounded-xl bg-ivory hover:bg-sandLight border border-sand text-xs font-bold text-espresso flex items-center gap-1.5 shadow-2xs transition">
+            <span>← Back</span>
+          </button>
+          <span class="px-3 py-1 rounded-full bg-lavenderSoft text-lavender text-xs font-bold">Student Profile Page</span>
+        </div>
+
+        <div id="teammate-profile-page-content" class="space-y-6">
+          <!-- Populated dynamically with live profile data -->
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODALS & DRAWERS (Create Room, Task Details, Member Status, QR, DMs)
+       ===================================================================== -->
+
+  <!-- Create Squad Room Modal -->
+  <div id="create-room-modal" class="hidden fixed inset-0 z-40 bg-espresso/45 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-gradient-to-br from-ivory via-cream to-sageSoft/55 border-2 border-sand rounded-[28px] max-w-lg w-full p-6 sm:p-7 shadow-cozy space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between">
+        <h3 class="font-display text-xl font-bold text-espresso">Create New Squad Room</h3>
+        <button type="button" onclick="closeCreateRoomModal()" class="w-8 h-8 rounded-xl bg-cream border border-sand font-bold text-mocha hover:text-espresso">✕</button>
+      </div>
+
+      <form id="create-room-form" onsubmit="handleCreateRoom(event)" class="space-y-3.5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1">Course / Subject</label>
+            <input type="text" id="new-room-subject" required placeholder="e.g., CS 302 • Software Eng" class="w-full px-3.5 py-2 rounded-xl bg-cream border border-sand text-sm text-espresso" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1">Your Locked Role</label>
+            <select id="new-room-role" class="w-full px-3.5 py-2 rounded-xl bg-cream border border-sand text-sm font-bold text-espresso">
+              <option value="Leader">Leader (Locked)</option>
+              <option value="Member">Member (Locked)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1">Project / Receipt Title</label>
+          <input type="text" id="new-room-title" required placeholder="e.g., Final System Prototype" class="w-full px-3.5 py-2 rounded-xl bg-cream border border-sand text-sm text-espresso" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1">Final Submission Deadline</label>
+          <input type="datetime-local" id="new-room-due" required class="w-full px-3.5 py-2 rounded-xl bg-cream border border-sand text-sm text-espresso" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1">Teammates (Comma-separated names or Invite IDs)</label>
+          <input type="text" id="new-room-members" placeholder="e.g., Liam Chen, Samira Patel" class="w-full px-3.5 py-2 rounded-xl bg-cream border border-sand text-sm text-espresso" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-mocha mb-1">Deliverables (One per line — auto-split backward)</label>
+          <textarea id="new-room-deliverables" rows="3" required placeholder="Research & Outline&#10;UI & Core Draft&#10;Final Slides & Review" class="w-full px-3.5 py-2 rounded-xl bg-cream border border-sand text-sm text-espresso"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-xl bg-sage hover:bg-sage/90 text-white font-bold text-sm shadow-sm transition">
+          Create Squad Room & Lock Role
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Task Submission & Verification Modal -->
+  <div id="task-action-modal" class="hidden fixed inset-0 z-40 bg-espresso/45 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-gradient-to-br from-ivory via-cream to-lavenderSoft/55 border-2 border-sand rounded-[28px] max-w-md w-full p-6 shadow-cozy space-y-4">
+      <div class="flex items-start justify-between gap-2">
+        <div>
+          <span id="modal-task-badge" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-honeySoft text-honey">Task Details</span>
+          <h3 id="modal-task-title" class="font-display text-lg font-bold text-espresso mt-1">Deliverable</h3>
+        </div>
+        <button type="button" onclick="closeTaskActionModal()" class="w-8 h-8 rounded-xl bg-cream border border-sand font-bold text-mocha hover:text-espresso">✕</button>
+      </div>
+      <div id="modal-task-body" class="space-y-4"></div>
+    </div>
+  </div>
+
+  <!-- Study Room Member Progress & Quick Profile Panel Modal -->
+  <div id="member-panel-modal" class="hidden fixed inset-0 z-40 bg-espresso/45 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-gradient-to-br from-ivory via-cream to-honeySoft/55 border-2 border-sand rounded-[28px] max-w-md w-full p-6 shadow-cozy space-y-4">
+      <div class="flex items-center justify-between">
+        <span class="px-3 py-0.5 rounded-full text-xs font-bold bg-sageSoft text-sage">Study Room Member Card</span>
+        <button type="button" onclick="closeMemberPanelModal()" class="w-8 h-8 rounded-xl bg-cream border border-sand font-bold text-mocha hover:text-espresso">✕</button>
+      </div>
+      <div id="member-panel-body" class="space-y-4"></div>
+    </div>
+  </div>
+
+  <!-- QR Scanner / Upload Modal (Works for both Adding Friends & Adding Room Members) -->
+  <div id="qr-scanner-modal" class="hidden fixed inset-0 z-40 bg-espresso/45 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-gradient-to-br from-ivory via-cream to-lavenderSoft/55 border-2 border-sand rounded-[28px] max-w-md w-full p-6 shadow-cozy space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <span id="qr-scanner-badge" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sageSoft text-sage">QR Pass Scanner</span>
+          <h3 id="qr-scanner-title" class="font-display text-lg font-bold text-espresso mt-1">Scan or Upload Teammate QR</h3>
+        </div>
+        <button type="button" onclick="closeQrScannerModal()" class="w-8 h-8 rounded-xl bg-cream border border-sand font-bold text-mocha hover:text-espresso">✕</button>
+      </div>
+
+      <div class="space-y-3">
+        <div class="relative rounded-2xl overflow-hidden bg-espresso/90 border-2 border-sand aspect-video flex items-center justify-center">
+          <video id="qr-video-preview" class="w-full h-full object-cover hidden" playsinline></video>
+          <canvas id="qr-scan-canvas" class="hidden"></canvas>
+          <div id="qr-camera-placeholder" class="text-center p-4 space-y-2">
+            <p class="text-xs font-bold text-ivory">Use Camera or Upload a QR Pass Image</p>
+            <button type="button" onclick="startQrCameraScan()" class="px-4 py-2 rounded-xl bg-sage text-white text-xs font-bold shadow-sm hover:bg-sage/90 transition">
+              Start Camera Scan
+            </button>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-2">
+          <label class="flex-1 cursor-pointer py-2.5 px-3 rounded-xl bg-cream hover:bg-sandLight border border-sand text-center text-xs font-bold text-espresso transition">
+            Upload QR Image PNG/JPG
+            <input type="file" id="qr-file-input" accept="image/*" onchange="handleQrImageUpload(event)" class="hidden" />
+          </label>
+        </div>
+
+        <form onsubmit="handleManualQrPayloadSubmit(event)" class="pt-2 border-t border-sand space-y-2">
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-mocha">Or Paste Invite Code / QR Text</label>
+          <div class="flex gap-2">
+            <input type="text" id="qr-manual-code-input" required placeholder="e.g., N1159-LIAM or scanned QR JSON" class="flex-1 px-3 py-2 rounded-xl bg-cream border border-sand text-xs text-espresso" />
+            <button type="submit" class="px-4 py-2 rounded-xl bg-espresso text-ivory text-xs font-bold hover:opacity-90 transition">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Instagram-Style Project Direct Messages Drawer / Modal -->
+  <div id="messages-drawer-modal" class="hidden fixed inset-0 z-50 bg-espresso/45 backdrop-blur-xs flex items-center justify-end">
+    <div class="bg-gradient-to-b from-ivory via-cream to-sageSoft/45 border-l-2 border-sand w-full max-w-2xl h-full shadow-cozy flex flex-col">
+      <!-- Drawer Header -->
+      <div class="px-5 py-4 border-b-2 border-sand bg-gradient-to-r from-ivory via-honeySoft/50 to-lavenderSoft/50 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <span class="w-9 h-9 rounded-2xl bg-lavenderSoft border border-lavender/30 flex items-center justify-center text-lavender font-bold">✉</span>
+          <div>
+            <h3 class="font-display text-lg font-bold text-espresso">Squad Direct Messages</h3>
+            <p class="text-[11px] text-mocha">Project check-ins & personal notes with your teammates</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeMessagesDrawer()" class="w-9 h-9 rounded-xl bg-cream border border-sand font-bold text-mocha hover:text-espresso">✕</button>
+      </div>
+
+      <!-- Drawer Body: Left Conversations List + Right Active Chat Thread -->
+      <div class="flex-1 grid grid-cols-1 sm:grid-cols-12 min-h-0">
+        <!-- Conversations List -->
+        <div class="sm:col-span-5 border-b sm:border-b-0 sm:border-r border-sand p-3 overflow-y-auto space-y-2 bg-cream/60">
+          <input type="text" id="dm-thread-search" oninput="renderDmThreadsList(this.value)" placeholder="Filter teammates..." class="w-full px-3 py-2 rounded-xl bg-ivory border border-sand text-xs text-espresso focus:outline-none focus:border-sage" />
+          <div id="dm-threads-list" class="space-y-1.5">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <!-- Active Thread View -->
+        <div class="sm:col-span-7 flex flex-col min-h-0 bg-ivory/75">
+          <div id="dm-active-header" class="px-4 py-3 border-b border-sand flex items-center justify-between gap-2 bg-cream/80">
+            <span class="text-xs font-bold text-mocha">Select a teammate to start chatting</span>
+          </div>
+
+          <div id="dm-messages-feed" class="flex-1 p-4 overflow-y-auto space-y-2.5">
+            <div class="h-full flex items-center justify-center text-center text-xs text-mocha p-6">
+              Click any teammate's profile picture in Squad Rooms or your Directory to send a direct message about your project!
+            </div>
+          </div>
+
+          <form id="dm-send-form" onsubmit="handleSendDirectMessage(event)" class="hidden p-3 border-t border-sand bg-cream/90 flex items-center gap-2">
+            <input type="text" id="dm-message-input" required placeholder="Write a project update or question..." class="flex-1 px-3.5 py-2 rounded-xl bg-ivory border border-sand text-xs sm:text-sm text-espresso focus:outline-none focus:border-sage" />
+            <button type="submit" class="px-4 py-2 rounded-xl bg-sage hover:bg-sage/90 text-white text-xs font-bold shadow-sm transition">
+              Send
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
